@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navigation from './component/Navigation';
+import PrintPage from './component/print/PrintPage';
 import Home from './pages/Home';
 import OrderDesk from './pages/OrderDesk';
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/order" element={<OrderDesk />} />
+          <Route path="/print" element={<PrintPage />} />
         </Routes>
       </Router>
     </div>

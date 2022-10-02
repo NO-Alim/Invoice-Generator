@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiPrinter, FiSave } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import CartList from './CartList';
 
 const OrderCart = () => {
@@ -24,18 +24,12 @@ const OrderCart = () => {
           <h2 className="text-2xl">$234.99</h2>
         </div>
         <div className="flex items-center justify-center gap-5 w-full">
-          <button className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all">
-            <i>
-              <FiPrinter />
-            </i>
-            <span>Print</span>
-          </button>
-          <button className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all">
-            <i>
-              <FiSave />
-            </i>
-            <span>Save</span>
-          </button>
+          <Link
+            to="/print"
+            className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all"
+          >
+            <span>Check Out</span>
+          </Link>
         </div>
       </div>
     </div>
