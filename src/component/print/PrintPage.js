@@ -11,7 +11,12 @@ const PrintPage = () => {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    setHeight(Math.round(printComponentRef.current.clientHeight / 96));
+    let clientHeight = Math.round(printComponentRef.current.clientHeight / 96);
+    if (clientHeight < 7) {
+      setHeight(clientHeight);
+    } else {
+      setHeight(6);
+    }
   }, [printComponentRef]);
   return (
     <div className="section bg-background/90 text-textPrimary min-h-screen flex flex-col items-center gap-5 border border-background">
