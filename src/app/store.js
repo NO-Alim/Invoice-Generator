@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import addToCartReducer from '../features/addToCart/addToCartSlice';
+import orderDeskFilter from '../features/orderDeskFilter/orderDeskFilter';
+
 export const store = configureStore({
   reducer: {
-    cart: addToCartReducer,
+    orderDesk: orderDeskFilter,
   },
+  //devTools: !process.env.NODE_ENV === 'production',
+  middleware: (getDefaultMiddlewares) => getDefaultMiddlewares(),
 });

@@ -1,38 +1,105 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Slider from 'react-slick';
+import { subCategoryFilter } from '../../features/orderDeskFilter/orderDeskFilter';
+import useGetSubCategory from '../../hooks/useGetSubCategory';
+import SampleNextArrow from '../slick.js/SampleNextArrow';
+import SamplePrevArrow from '../slick.js/SamplePrevArrow';
 import { AddSubCategoryModal } from './AddSubCategoryModal';
 
-const SubCategroy = () => {
+const SubCategory = () => {
+  const { subCategory: selectedSubCategory } = useSelector(
+    (state) => state.orderDesk
+  );
+  const { category } = useSelector((state) => state.orderDesk);
+
   const [opened, setOpened] = useState(false);
+  const { subCategory, loading, error } = useGetSubCategory(category);
+
+  const dispatch = useDispatch();
 
   const controlModal = () => {
     setOpened((prevState) => !prevState);
   };
+
+  const handleClick = (e) => {
+    dispatch(subCategoryFilter(e));
+  };
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: subCategory.length > 5 ? 5 : subCategory.length,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: subCategory.length > 4 ? 4 : subCategory.length,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 724,
+        settings: {
+          slidesToShow: subCategory.length > 3 ? 3 : subCategory.length,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 550,
+        settings: {
+          slidesToShow: subCategory.length > 2 ? 2 : subCategory.length,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <div className="flex items-center justify-between">
-        <div className="flex gap-5">
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item One
-          </div>
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item Two
-          </div>
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item Three
-          </div>
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item Four
-          </div>
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item Five
-          </div>
-          <div className="px-5 py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all">
-            Item Six
-          </div>
+        <div className={`overflow-hidden flex-1 w-full`}>
+          {subCategory && subCategory.length > 0 ? (
+            <div className="ml-6 mr-6">
+              <Slider {...settings}>
+                {subCategory.map((item, ind) => {
+                  return (
+                    <div
+                      className={`px-5 text-center py-2 border border-brand/50 rounded-md cursor-pointer hover:border-brand hover:text-brand all ${
+                        selectedSubCategory === item.subCategory
+                          ? 'bg-brand text-background hover:text-background'
+                          : ''
+                      }`}
+                      key={ind}
+                      onClick={() => handleClick(item.subCategory)}
+                    >
+                      {item.subCategory}
+                    </div>
+                  );
+                })}
+              </Slider>
+            </div>
+          ) : (
+            <div>
+              <h1
+                className="text-2xl font-thin cursor-pointer"
+                onClick={controlModal}
+              >
+                Add sub a sub category before start.
+                <span className="text-textPrimary/50 ml-2">
+                  (Pizza, coca-cola etc.)
+                </span>
+              </h1>
+            </div>
+          )}
         </div>
-
-        {/* add button */}
-        <div className="flex items-center justify-center border-l-2 border-textPrimary pl-5">
+        <div className="flex items-center justify-center pl-5">
+          {/* add Main category */}
           <div
             className="w-10 h-10 flex items-center justify-center text-lg font-thin border border-brand/50 rounded-full cursor-pointer bg-brand/30"
             onClick={controlModal}
@@ -56,4 +123,4 @@ const SubCategroy = () => {
   );
 };
 
-export default SubCategroy;
+export default SubCategory;

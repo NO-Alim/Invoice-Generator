@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import AddProductModal from './AddProductModal';
-import SingleOrderItem from './SingleOrderItem';
+import SingleProduct from './SingleProduct';
 
-const OrderList = () => {
+const ProductList = () => {
   const [opened, setOpened] = useState(false);
+  const [x, setX] = useState(false);
 
   const controlModal = () => {
     setOpened((prevState) => !prevState);
@@ -11,12 +12,12 @@ const OrderList = () => {
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 px-5 overflow-y-auto max-h-80">
-        <SingleOrderItem />
-        <SingleOrderItem />
-        <SingleOrderItem />
-        <SingleOrderItem />
-        <SingleOrderItem />
-        <SingleOrderItem />
+        <SingleProduct />
+        <SingleProduct />
+        <SingleProduct />
+        <SingleProduct />
+        <SingleProduct />
+        <SingleProduct />
         <div
           className="x h-32 border border-brand/50 rounded-md flex flex-col items-center justify-center cursor-pointer hover:border-brand all text-brand"
           onClick={controlModal}
@@ -39,4 +40,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default ProductList;

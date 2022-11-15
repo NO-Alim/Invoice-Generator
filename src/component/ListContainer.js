@@ -1,7 +1,10 @@
 import React from 'react';
+import useGetTransaction from '../hooks/useGetTransaction';
 import TbodyItem from './TbodyItem';
 
 const ListContainer = () => {
+  const { transaction, loading } = useGetTransaction();
+  console.log(transaction);
   return (
     <div>
       <table className="flex flex-col gap-5 w-full">
@@ -15,12 +18,10 @@ const ListContainer = () => {
           </tr>
         </thead>
         <tbody className="w-full">
-          <TbodyItem />
-          <TbodyItem />
-          <TbodyItem />
-          <TbodyItem />
-          <TbodyItem />
-          <TbodyItem />
+          {transaction &&
+            transaction.map((item, ind) => {
+              return <TbodyItem key={ind} />;
+            })}
         </tbody>
       </table>
     </div>
