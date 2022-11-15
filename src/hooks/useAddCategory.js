@@ -13,7 +13,7 @@ const useAddCategory = () => {
 
   const addMainCategory = async (arg) => {
     const user = auth.currentUser;
-    const transactionRef = await addDoc(collection(db, 'mainCategory'), {
+    const categoryRef = await addDoc(collection(db, 'mainCategory'), {
       category: arg,
       userFK: user.uid,
       timeStamp: serverTimestamp(),

@@ -13,11 +13,9 @@ const useAddProduct = () => {
 
   const addProduct = async (arg) => {
     const user = auth.currentUser;
-    const transactionRef = await addDoc(collection(db, 'products'), {
-      productName: arg.name,
-      productPrice: arg.price,
-      productUrl:
-        'https://robohash.org/51f20e771c1c5876dbc9be6fa690132a?set=set4&bgset=&size=400x400',
+    const productRef = await addDoc(collection(db, 'products'), {
+      productName: arg.productName,
+      productPrice: arg.productPrice,
       category: arg.category,
       subCategory: arg.subCategory,
       userFK: user.uid,

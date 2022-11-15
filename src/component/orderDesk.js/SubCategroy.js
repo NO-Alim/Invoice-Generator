@@ -8,10 +8,9 @@ import SamplePrevArrow from '../slick.js/SamplePrevArrow';
 import { AddSubCategoryModal } from './AddSubCategoryModal';
 
 const SubCategory = () => {
-  const { subCategory: selectedSubCategory } = useSelector(
+  const { subCategory: selectedSubCategory, category } = useSelector(
     (state) => state.orderDesk
   );
-  const { category } = useSelector((state) => state.orderDesk);
 
   const [opened, setOpened] = useState(false);
   const { subCategory, loading, error } = useGetSubCategory(category);

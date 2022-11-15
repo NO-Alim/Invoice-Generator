@@ -7,18 +7,21 @@ import {
   where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import '../firebase';
 
-export default function useGetSubCategory(queryString) {
-  const [subCategory, setSubCategory] = useState([]);
+const useGetProducts = (categoryString, subCategoryString) => {
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const db = getFirestore();
   const auth = getAuth();
   const user = auth.currentUser;
-  let q = query(collection(db, 'subCategory'), where('userFK', '==', user.uid));
-  if (queryString) {
-    q = query(q, where('category', '==', queryString));
+  let q = query(collection(db, 'products'), where('userFK', '==', user.uid));
+
+  if (categoryString) {
+    q = query(q, where('category', '==', categoryString));
+  }
+  if (subCategoryString) {
+    q = query(q, where('subCategory', '==', subCategoryString));
   }
 
   useEffect(() => {
@@ -26,14 +29,15 @@ export default function useGetSubCategory(queryString) {
       setLoading(true);
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const data = querySnapshot.docs.map((doc) => doc.data());
-        setSubCategory(data);
+        setProducts(data);
       });
       setLoading(false);
       return unsubscribe;
     } else {
       return;
     }
-  }, [queryString]);
+  }, [categoryString, subCategoryString]);
+  return { products, loading };
+};
 
-  return { subCategory, loading };
-}
+export default useGetProducts;
