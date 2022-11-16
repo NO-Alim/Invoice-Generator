@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Navigate,
@@ -15,6 +16,7 @@ import OrderDesk from './pages/OrderDesk';
 import Register from './pages/Register';
 function App() {
   const { currentUser, loading } = useAuth();
+  const { productList } = useSelector((state) => state.cart);
   if (loading)
     return (
       <div className="w-full h-screen flex justify-center items-center bg-background">
@@ -44,7 +46,17 @@ function App() {
           />
           <Route
             path="/print"
-            element={currentUser ? <PrintPage /> : <Navigate to="/register" />}
+            element={
+              currentUser ? (
+                productList && productList.length > 0 ? (
+                  <PrintPage />
+                ) : (
+                  <Navigate to="/order" />
+                )
+              ) : (
+                <Navigate to="/register" />
+              )
+            }
           />
         </Routes>
       </Router>

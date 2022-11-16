@@ -74,7 +74,7 @@ const SubCategory = () => {
                           ? 'bg-brand text-background hover:text-background'
                           : ''
                       }`}
-                      key={ind}
+                      key={item.id}
                       onClick={() => handleClick(item.subCategory)}
                     >
                       {item.subCategory}

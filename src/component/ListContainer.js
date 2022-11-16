@@ -4,7 +4,6 @@ import TbodyItem from './TbodyItem';
 
 const ListContainer = () => {
   const { transaction, loading } = useGetTransaction();
-  console.log(transaction);
   return (
     <div>
       <table className="flex flex-col gap-5 w-full">

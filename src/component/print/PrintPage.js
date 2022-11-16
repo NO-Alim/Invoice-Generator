@@ -1,14 +1,28 @@
+import _uniqueId from 'lodash/uniqueId';
+import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaSave } from 'react-icons/fa';
 import { FiPrinter } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
+import useAddTransaction from '../../hooks/useAddTransaction';
 import PrintedItemList from './PrintedItemList';
 import PrintedSubtotal from './PrintedSubtotal';
 
 const PrintPage = () => {
-  const printComponentRef = React.createRef();
+  const { addTransaction } = useAddTransaction();
   const [height, setHeight] = useState(0);
+  const { cart } = useSelector((state) => state);
+  const printComponentRef = React.createRef();
+
+  let invoiceNumber = _uniqueId('invoice #');
+
+  const handleSave = () => {
+    addTransaction(cart, invoiceNumber);
+  };
+
+  let date = new Date().toLocaleDateString();
 
   useEffect(() => {
     let clientHeight = Math.round(printComponentRef.current.clientHeight / 96);
@@ -34,10 +48,10 @@ const PrintPage = () => {
         </div>
         <div className="flex flex-col gap-2">
           <div className="mt-5 flex w-full justify-center border-t border-b border-dashed border-background">
-            <h2 className="font-bold">Invoice #{`2345234`}</h2>
+            <h2 className="font-bold">{invoiceNumber}</h2>
           </div>
           <div>
-            <h2>Date {`01/11/2020`}</h2>
+            <h2>Date: {moment(date).format('L')}</h2>
             <h2 className="font-bold">Client {`xyz`}</h2>
           </div>
           <div className="flex w-full justify-between font-semibold text-sm border-t border-b border-dashed border-background">
@@ -64,6 +78,15 @@ const PrintPage = () => {
           </i>
           <span>Edit</span>
         </Link>
+        <div
+          className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all cursor-pointer"
+          onClick={handleSave}
+        >
+          <i>
+            <FaSave />
+          </i>
+          <span>Save</span>
+        </div>
         <ReactToPrint
           pageStyle={`@page {size: 3.5in ${height}in }`}
           trigger={() => (
@@ -71,7 +94,7 @@ const PrintPage = () => {
               <i>
                 <FiPrinter />
               </i>
-              <span>Print</span>
+              <span>Save & Print</span>
             </button>
           )}
           content={() => printComponentRef.current}

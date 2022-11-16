@@ -72,7 +72,7 @@ const MainCategory = () => {
                           ? 'bg-brand text-background hover:text-background'
                           : ''
                       }`}
-                      key={ind}
+                      key={item.id}
                       onClick={() => handleClick(item.category)}
                     >
                       {item.category}

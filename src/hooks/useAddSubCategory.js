@@ -5,6 +5,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from 'firebase/firestore';
+import _uniqueId from 'lodash/uniqueId';
 import '../firebase';
 
 const useAddSubCategory = () => {
@@ -18,6 +19,7 @@ const useAddSubCategory = () => {
       subCategory: arg.subCategory,
       userFK: user.uid,
       timeStamp: serverTimestamp(),
+      id: _uniqueId('subCategory-'),
     });
   };
   return { addSubCategory };

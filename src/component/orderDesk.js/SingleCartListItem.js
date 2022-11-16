@@ -1,14 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
+import {
+  decrementItem,
+  deleteItem,
+  editItem,
+  incrementItem,
+} from '../../features/cart/cartSlice';
 
-const SingleCartListItem = () => {
-  const [value, setValue] = useState(1);
+const SingleCartListItem = ({ item }) => {
+  const { name, price, quantity, id } = item;
+  const [value, setValue] = useState(quantity);
+  const dispatch = useDispatch();
+  const inputRef = useRef(null);
+
+  const handleIncrement = () => {
+    dispatch(incrementItem(item));
+  };
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      dispatch(decrementItem(item));
+    }
+  };
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+    dispatch(
+      editItem({
+        id,
+        quantity: Number(e.target.value),
+      })
+    );
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteItem(id));
+  };
+
+  useEffect(() => {
+    setValue(quantity);
+  }, [quantity]);
+
+  // useEffect(() => {
+  //   if (!value || value === null || value === undefined) {
+  //     dispatch(deleteItem(id));
+  //   }
+
+  //   if (document.activeElement === inputRef.current) {
+  //     console.log('element has focus');
+  //   } else {
+  //     if (!value || value === null || value === undefined) {
+  //       dispatch(deleteItem(id));
+  //     }
+  //   }
+  // }, [value]);
+
   return (
     <>
       <tr className="w-full py-1 px-2 flex justify-between">
-        <td className="flex-1">Hello world</td>
+        <td className="flex-1">{name}</td>
         <td className="flex-1 flex items-center justify-center gap-1">
-          <p className="cursor-pointer">
+          <p className="cursor-pointer" onClick={handleDecrement}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -24,9 +76,10 @@ const SingleCartListItem = () => {
             className="w-9 text-center bg-brand/50 border-none focus:outline-none hover:outline-none appearance-none"
             type="number"
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            ref={inputRef}
+            onChange={(e) => handleChange(e)}
           />
-          <p className="cursor-pointer">
+          <p className="cursor-pointer" onClick={handleIncrement}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -41,10 +94,13 @@ const SingleCartListItem = () => {
           </p>
         </td>
         <td className="flex-1 flex items-center justify-center">
-          $ {'456.99'}
+          $ {price * quantity}
         </td>
         <td className="flex items-center justify-center">
-          <i className="cursor-pointer hover:text-brand all">
+          <i
+            className="cursor-pointer hover:text-brand all"
+            onClick={handleDelete}
+          >
             <RiDeleteBin6Line />
           </i>
         </td>

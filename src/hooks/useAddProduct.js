@@ -5,6 +5,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from 'firebase/firestore';
+import _uniqueId from 'lodash/uniqueId';
 import '../firebase';
 
 const useAddProduct = () => {
@@ -14,6 +15,7 @@ const useAddProduct = () => {
   const addProduct = async (arg) => {
     const user = auth.currentUser;
     const productRef = await addDoc(collection(db, 'products'), {
+      id: _uniqueId('product-'),
       productName: arg.productName,
       productPrice: arg.productPrice,
       category: arg.category,

@@ -3,8 +3,9 @@ import {
   addDoc,
   collection,
   getFirestore,
-  serverTimestamp,
+  serverTimestamp
 } from 'firebase/firestore';
+import _uniqueId from 'lodash/uniqueId';
 import '../firebase';
 
 const useAddCategory = () => {
@@ -17,6 +18,7 @@ const useAddCategory = () => {
       category: arg,
       userFK: user.uid,
       timeStamp: serverTimestamp(),
+      id: _uniqueId('category-'),
     });
   };
   return { addMainCategory };
