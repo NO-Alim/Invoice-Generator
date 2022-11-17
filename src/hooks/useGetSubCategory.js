@@ -12,6 +12,7 @@ import '../firebase';
 export default function useGetSubCategory(queryString) {
   const [subCategory, setSubCategory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const db = getFirestore();
   const auth = getAuth();
@@ -24,11 +25,18 @@ export default function useGetSubCategory(queryString) {
   useEffect(() => {
     if (user.uid) {
       setLoading(true);
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => doc.data());
-        setSubCategory(data);
-      });
-      setLoading(false);
+      const unsubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          setSubCategory(data);
+          setLoading(false);
+        },
+        (error) => {
+          setError(error);
+        }
+      );
+
       return unsubscribe;
     } else {
       return;

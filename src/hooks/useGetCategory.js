@@ -25,14 +25,21 @@ export default function useGetCategory() {
   useEffect(() => {
     if (user.uid) {
       setLoading(true);
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        // querySnapshot.forEach((doc) => {
-        //   data.push(doc.data());
-        // });
-        const data = querySnapshot.docs.map((doc) => doc.data());
-        setCategory(data);
-      });
-      setLoading(false);
+      const unsubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          // querySnapshot.forEach((doc) => {
+          //   data.push(doc.data());
+          // });
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          setCategory(data);
+          setLoading(false);
+        },
+        (error) => {
+          setError(error);
+        }
+      );
+
       return unsubscribe;
     } else {
       return;

@@ -7,13 +7,18 @@ const SingleProduct = ({ item }) => {
   const { productList } = useSelector((state) => state.cart);
 
   //let id = _uniqueId('item-');
-  const { productName, productPrice, id } = item;
+  const { productName, productPrice, id, subCategory, category } = item;
+
+  //click for add this product to cart slice
   const handleClick = () => {
+    //cartSlice data structure
     const data = {
       name: item.productName,
       price: Number(productPrice),
       quantity: 1,
       id,
+      subCategory,
+      category,
     };
 
     if (productList?.length > 0) {

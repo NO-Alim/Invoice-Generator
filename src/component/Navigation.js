@@ -70,7 +70,7 @@ const Navigation = () => {
         <div className="hidden md:flex gap-5 md:gap-10">
           <div className="flex gap-5 md:gap-10 items-center justify-end flex-1">
             <Link to="/">Home</Link>
-            <Link href="/">Sale History</Link>
+            <Link to="/transactions">Transactions</Link>
           </div>
           <div className="flex gap-5 md:gap-10 items-center">
             <Link
@@ -136,7 +136,7 @@ const Navigation = () => {
                 <Link to="/">Home</Link>
               </li>
               <li>
-                <Link to="/">Sales History</Link>
+                <Link to="/transactions">Transactions</Link>
               </li>
               <li>
                 <button className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer">

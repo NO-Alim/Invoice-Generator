@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 const useGetProducts = (categoryString, subCategoryString) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const db = getFirestore();
   const auth = getAuth();
@@ -27,11 +28,18 @@ const useGetProducts = (categoryString, subCategoryString) => {
   useEffect(() => {
     if (user.uid) {
       setLoading(true);
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const data = querySnapshot.docs.map((doc) => doc.data());
-        setProducts(data);
-      });
-      setLoading(false);
+      const unsubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          const data = querySnapshot.docs.map((doc) => doc.data());
+          setProducts(data);
+          setLoading(false);
+        },
+        (error) => {
+          setError(error);
+        }
+      );
+
       return unsubscribe;
     } else {
       return;

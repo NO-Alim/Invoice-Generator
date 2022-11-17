@@ -14,6 +14,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import OrderDesk from './pages/OrderDesk';
 import Register from './pages/Register';
+import Transactions from './pages/Transactions';
 function App() {
   const { currentUser, loading } = useAuth();
   const { productList } = useSelector((state) => state.cart);
@@ -56,6 +57,13 @@ function App() {
               ) : (
                 <Navigate to="/register" />
               )
+            }
+          />
+
+          <Route
+            path="/transactions"
+            element={
+              currentUser ? <Transactions /> : <Navigate to="/register" />
             }
           />
         </Routes>

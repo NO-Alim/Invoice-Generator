@@ -1,25 +1,37 @@
+import moment from 'moment/moment';
 import React from 'react';
-import { FaEdit } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-const TbodyItem = () => {
+const TbodyItem = ({ item }) => {
+  const { id, invoice, productNameArray, totalPrice, timeStamp } = item || {};
+
   return (
     <>
       <tr className="w-full px-3 py-1 md:px-10 flex justify-between">
-        <td className="flex gap-2 items-center">
+        <td className="flex-1 flex gap-2 items-center">
           <span>
             <input type="checkbox" />
           </span>{' '}
-          <span> hello world</span>
+          <span>
+            {productNameArray.map((item, ind) => {
+              return (
+                item + `${ind + 1 !== productNameArray.length ? ', ' : ''}`
+              );
+            })}
+          </span>
         </td>
-        <td>10:00:00</td>
-        <td>10:00:00</td>
-        <td>hello world</td>
+        <td className="flex-1 hidden md:block">
+          {moment.unix(timeStamp.seconds).format('L')}
+        </td>
+        <td className="flex-1 hidden md:block">
+          {moment.unix(timeStamp.seconds).format('LTS')}
+        </td>
+        <td className="flex-1">{totalPrice}</td>
         <td className="flex gap-3">
-          <button>
+          {/* <button>
             <i>
               <FaEdit />
             </i>
-          </button>
+          </button> */}
 
           <button>
             <i>
