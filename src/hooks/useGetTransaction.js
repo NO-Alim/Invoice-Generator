@@ -37,7 +37,13 @@ export default function useGetTransaction(name, itemLimit) {
       const unsubscribe = onSnapshot(
         q,
         (querySnapshot) => {
-          const data = querySnapshot.docs.map((doc) => doc.data());
+          const data = querySnapshot.docs.map((doc) => {
+            const withKey = {
+              key: doc.id,
+              ...doc.data(),
+            };
+            return withKey;
+          });
           setTransaction(data);
           setLoading(false);
         },
@@ -51,19 +57,6 @@ export default function useGetTransaction(name, itemLimit) {
       return;
     }
   }, [name]);
-
-  // useEffect(() => {
-  //   onSnapshot(
-  //     query(
-  //       collection(db, 'subCategory'),
-  //       orderBy('timeStamp', 'desc'),
-  //       limit(1)
-  //     ),
-  //     (querySnapshot) => {
-  //       querySnapshot.docs.map((doc) => console.log(doc.data()));
-  //     }
-  //   );
-  // }, []);
 
   return { transaction, loading, error };
 }

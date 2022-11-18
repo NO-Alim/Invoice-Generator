@@ -4,7 +4,8 @@ const Header = () => {
   return (
     <div className="section bg-background/90 text-textPrimary flex flex-col gap-10">
       <h1 className="text-2xl font-thin">
-        Here's What's Happen With Your Store.
+        Here's What's Happen With Your Store{' '}
+        <span className="text-brand">Today</span>.
       </h1>
       <div className="flex gap-10">
         <IndividualSummary />

@@ -1,7 +1,7 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useRef, useState } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaTimes } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
 import useLogOut from '../hooks/useLogOut';
 import logo from '../img/logo.png';
@@ -82,12 +82,15 @@ const Navigation = () => {
               </i>
               ORDER
             </Link>
-            <button
+            {/* <button
               className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer"
               onClick={logOut}
             >
               Logout
-            </button>
+            </button> */}
+            <div className="x w-10 h-10 rounded-full bg-white cursor-pointer overflow-hidden">
+              <img src={logo} alt="" className="" />
+            </div>
           </div>
         </div>
         <div className="menu md:hidden cursor-pointer">
@@ -128,7 +131,9 @@ const Navigation = () => {
             <NavLink to="/">
               <img className="w-16" src={logo} alt="mralim" />
             </NavLink>
-            <i onClick={() => setDrawerOpen(false)}>X</i>
+            <i onClick={() => setDrawerOpen(false)}>
+              <FaTimes />
+            </i>
           </div>
           <div>
             <ul className="list-none flex flex-col gap-5">

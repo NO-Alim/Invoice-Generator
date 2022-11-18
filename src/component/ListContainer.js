@@ -4,7 +4,8 @@ import TbodyItem from './TbodyItem';
 import LoaderSpin from './ui/LoaderSpin';
 
 const ListContainer = () => {
-  const { transaction, loading, error } = useGetTransaction('', 10);
+  const dataLimit = 5;
+  const { transaction, loading, error } = useGetTransaction('', dataLimit);
   let content;
   if (loading) content = <LoaderSpin />;
   if (!loading && transaction?.length === 0) {
@@ -28,7 +29,7 @@ const ListContainer = () => {
         </thead>
         <tbody className="w-full">
           {transaction.map((item, ind) => {
-            return <TbodyItem item={item} key={ind} />;
+            return <TbodyItem item={item} key={item.key} />;
           })}
         </tbody>
       </table>

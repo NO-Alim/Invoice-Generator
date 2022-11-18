@@ -3,7 +3,6 @@ import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 const TbodyItem = ({ item }) => {
   const { id, invoice, productNameArray, totalPrice, timeStamp } = item || {};
-
   return (
     <>
       <tr className="w-full px-3 py-1 md:px-10 flex justify-between">
