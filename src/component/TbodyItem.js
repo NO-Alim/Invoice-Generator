@@ -1,11 +1,19 @@
 import moment from 'moment/moment';
 import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 const TbodyItem = ({ item }) => {
-  const { id, invoice, productNameArray, totalPrice, timeStamp } = item || {};
+  const { productNameArray, totalPrice, timeStamp, key } = item || {};
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/transaction/${key}`);
+  };
   return (
     <>
-      <tr className="w-full px-3 py-1 md:px-10 flex justify-between">
+      <tr
+        className="w-full px-3 py-1 md:px-10 flex justify-between cursor-pointer"
+        onClick={handleClick}
+      >
         <td className="flex-1 flex gap-2 items-center">
           <span>
             <input type="checkbox" />
@@ -26,12 +34,6 @@ const TbodyItem = ({ item }) => {
         </td>
         <td className="flex-1">{totalPrice}</td>
         <td className="flex gap-3">
-          {/* <button>
-            <i>
-              <FaEdit />
-            </i>
-          </button> */}
-
           <button>
             <i>
               <RiDeleteBin6Line />

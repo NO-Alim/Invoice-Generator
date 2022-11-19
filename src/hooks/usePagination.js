@@ -12,14 +12,18 @@ import {
   where,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import '../firebase';
 
-export default function usePagination(name, itemLimit) {
+export default function usePagination(itemLimit) {
   const [transaction, setTransaction] = useState([]); //list
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [dataForCheckingNext, setDataForCheckingNext] = useState(itemLimit);
   const [page, setPage] = useState(1);
+  const { name, category, subCategory } = useSelector(
+    (state) => state.transactionFilter
+  );
 
   const db = getFirestore();
   const auth = getAuth();
@@ -34,6 +38,10 @@ export default function usePagination(name, itemLimit) {
   if (name) {
     q = query(q, where('productNameArray', 'array-contains', name));
   }
+
+  // if (true) {
+  //   q = query(q, where('productsCategoryArray', 'array-contains', 'Food'));
+  // }
 
   useEffect(() => {
     if (user.uid) {
@@ -54,6 +62,7 @@ export default function usePagination(name, itemLimit) {
           setLoading(false);
         },
         (error) => {
+          setLoading(false);
           setError(error);
         }
       );

@@ -1,7 +1,7 @@
 import React from 'react';
 import TbodyItem from '../component/TbodyItem';
-import TransactionListHeader from '../component/TransactionListHeader';
 import LoaderSpin from '../component/ui/LoaderSpin';
+import TransactionListHeader from '../component/ui/TransactionPage/TransactionListHeader';
 import usePagination from '../hooks/usePagination';
 
 const Transactions = () => {
@@ -14,11 +14,15 @@ const Transactions = () => {
     showNext,
     showPrevious,
     dataForCheckingNext,
-  } = usePagination('', dataLimit);
+  } = usePagination(dataLimit);
+
   let content;
 
   if (loading) content = <LoaderSpin />;
-  if (!loading && transaction?.length === 0) {
+  if (!loading && error) {
+    content = <h1 className="x text-red-600 text-xl">{error.message}</h1>;
+  }
+  if (!loading && !error && transaction?.length === 0) {
     content = (
       <h1 className="x text-red-600 text-xl">
         Your Transaction List is Empty now.
@@ -26,10 +30,9 @@ const Transactions = () => {
     );
   }
 
-  if (!loading && transaction && transaction.length > 0) {
+  if (!loading && !error && transaction && transaction.length > 0) {
     content = (
-      <div className="bg-background rounded-md sub-section flex flex-col gap-5 md:gap-10">
-        <TransactionListHeader />
+      <>
         <table className="flex flex-col gap-5 w-full">
           <thead className="w-full bg-brand px-3 py-1 rounded-t-md md:px-10">
             <tr className="w-full flex justify-between text-lg text-background">
@@ -64,13 +67,16 @@ const Transactions = () => {
             Next
           </button>
         </div>
-      </div>
+      </>
     );
   }
   return (
     <div>
       <div className="section bg-background/90 text-textPrimary min-h-screen">
-        {content}
+        <div className="bg-background rounded-md sub-section flex flex-col gap-5 md:gap-10">
+          <TransactionListHeader />
+          {content}
+        </div>
       </div>
     </div>
   );
