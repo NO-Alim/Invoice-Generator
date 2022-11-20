@@ -1,6 +1,7 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useRef, useState } from 'react';
+import OrderCart from './orderDesk.js/OrderCart';
 const useStyles = makeStyles({
   root: {
     display: 'flex',
@@ -18,10 +19,11 @@ const useStyles = makeStyles({
   },
 });
 
-const CartDrawer = () => {
+const CartDrawer = ({ totalItem }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const DrawerRef = useRef(null);
   const menuBtnRef = useRef(null);
+
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
@@ -35,6 +37,7 @@ const CartDrawer = () => {
   const handleClick = (e) => {
     if (!menuBtnRef.current.contains(e.target)) {
       if (!DrawerRef.current.contains(e.target)) {
+        console.log('hello world');
         setDrawerOpen(false);
       }
     }
@@ -54,11 +57,13 @@ const CartDrawer = () => {
   return (
     <>
       <div
-        className="fixed bg-brand w-8 h-20 rounded-l-lg right-0 top-1/3 flex items-center justify-center cursor-pointer"
+        className="fixed bg-red-400 text-background w-8 h-20 rounded-l-lg right-0 top-1/3 flex items-center justify-center cursor-pointer"
         onClick={toggleDrawer}
         ref={menuBtnRef}
       >
-        <div className="x rotate-90">cart{10}</div>
+        <div className="rotate-90 flex gap-2">
+          cart <span className="font-bold">{totalItem}</span>
+        </div>
       </div>
       <Drawer
         className={classes.list}
@@ -69,7 +74,9 @@ const CartDrawer = () => {
         classes={{ paper: classes.drawerPaper }}
         ref={DrawerRef}
       >
-        hello world
+        <div className="p-2 w-[300px] sm:w-[400px] h-full">
+          <OrderCart />
+        </div>
       </Drawer>
     </>
   );

@@ -20,7 +20,7 @@ import SingleTransaction from './pages/SingleTransaction';
 import Transactions from './pages/Transactions';
 function App() {
   const { currentUser, loading } = useAuth();
-  const { productList } = useSelector((state) => state.cart);
+  const { productList, totalItem } = useSelector((state) => state.cart);
   if (loading)
     return (
       <div className="w-full h-screen flex justify-center items-center bg-background">
@@ -77,7 +77,9 @@ function App() {
           />
           <Route path="*" element={<FourOFour />} />
         </Routes>
-        {currentUser && <CartDrawer />}
+        {currentUser && productList && productList.length > 0 && (
+          <CartDrawer totalItem={totalItem} />
+        )}
       </Router>
     </div>
   );

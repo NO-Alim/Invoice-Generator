@@ -2,6 +2,7 @@ import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import LoaderSpin from '../component/ui/LoaderSpin';
+import SingleTransactionBody from '../component/ui/TransactionPage/SingleTransactionBody';
 
 const SingleTransaction = () => {
   const { id } = useParams();
@@ -16,7 +17,12 @@ const SingleTransaction = () => {
   if (loading) content = <LoaderSpin />;
   if (!loading && error)
     content = <h1 className="x text-red-600 text-xl">{error.message}</h1>;
-  if (!loading && !error && data) content = <h2>Hello World</h2>;
+  if (!loading && !error && data)
+    content = (
+      <div className="bg-textPrimary text-black sub-section flex flex-col gap-5 md:gap-10">
+        <SingleTransactionBody data={data} />
+      </div>
+    );
   if (!loading && !error && !data) content = <h2>No Data Found</h2>;
   useEffect(() => {
     const fetchDoc = async () => {
