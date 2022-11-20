@@ -22,7 +22,7 @@ const TransactionListHeader = () => {
     <div className="flex flex-col md:flex-row gap-5 items-start md:items-center justify-between">
       <div className="text-end">
         <form
-          className="flex border border-brand rounded-md overflow-hidden bg-brand/10 w-auto px-2 py-1"
+          className="flex border border-brand rounded-md overflow-hidden bg-brand/10 w-auto px-2 py-1 w-auto"
           onSubmit={handleSubmit}
         >
           <button>

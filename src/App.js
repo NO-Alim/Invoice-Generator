@@ -6,6 +6,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
+import CartDrawer from './component/CartDrawer';
 import Navigation from './component/Navigation';
 import PrintPage from './component/print/PrintPage';
 import LoaderSpin from './component/ui/LoaderSpin';
@@ -76,6 +77,7 @@ function App() {
           />
           <Route path="*" element={<FourOFour />} />
         </Routes>
+        {currentUser && <CartDrawer />}
       </Router>
     </div>
   );

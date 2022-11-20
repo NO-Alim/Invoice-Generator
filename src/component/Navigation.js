@@ -143,6 +143,17 @@ const Navigation = () => {
               <li>
                 <Link to="/transactions">Transactions</Link>
               </li>
+              <li className="flex">
+                <Link
+                  to="order"
+                  className="bg-brand text-background px-3 py-1 rounded-md cursor-pointer flex items-center justify-between gap-5 font-bold"
+                >
+                  <i className="font-thin">
+                    <FaPlus />
+                  </i>
+                  ORDER
+                </Link>
+              </li>
               <li>
                 <button className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer">
                   Logout
