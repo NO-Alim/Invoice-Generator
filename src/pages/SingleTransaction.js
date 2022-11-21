@@ -19,7 +19,7 @@ const SingleTransaction = () => {
     content = <h1 className="x text-red-600 text-xl">{error.message}</h1>;
   if (!loading && !error && data)
     content = (
-      <div className="bg-textPrimary text-black sub-section flex flex-col gap-5 md:gap-10">
+      <div className="bg-background text-textPrimary rounded-md sub-section flex flex-col gap-5 md:gap-10">
         <SingleTransactionBody data={data} />
       </div>
     );

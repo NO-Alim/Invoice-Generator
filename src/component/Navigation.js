@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useRef, useState } from 'react';
 import { FaPlus, FaTimes } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
-import useLogOut from '../hooks/useLogOut';
 import logo from '../img/logo.png';
+import DashBoardDrawerBody from './DashBoardDrawerBody';
 
 const useStyles = makeStyles({
   root: {
@@ -24,20 +24,26 @@ const useStyles = makeStyles({
 });
 
 const Navigation = () => {
-  //const { logOut } = useFirebaseContext();
-  const { logOut } = useLogOut();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [dashBoardDrawerOpen, setDashBoardDrawerOpen] = useState(false);
 
   const menuBtnRef = useRef(null);
+  const dashBoardBtnRef = useRef(null);
+  const dashBoardBtnRef2 = useRef(null);
   const DrawerRef = useRef(null);
+  const DashBoardDrawerRef = useRef(null);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
+  };
+  const toggleDashBord = () => {
+    setDashBoardDrawerOpen(!dashBoardDrawerOpen);
   };
 
   const toggleDrawerOutClick = (e) => {
     if (e.type === 'keydown' && (e.key === 'Enter' || e.key === 'shift')) {
       setDrawerOpen(false);
+      setDashBoardDrawerOpen(false);
     }
   };
 
@@ -45,6 +51,13 @@ const Navigation = () => {
     if (!menuBtnRef.current.contains(e.target)) {
       if (!DrawerRef.current.contains(e.target)) {
         setDrawerOpen(false);
+      }
+    }
+    if (!dashBoardBtnRef2.current.contains(e.target)) {
+      if (!dashBoardBtnRef.current.contains(e.target)) {
+        if (!DashBoardDrawerRef.current.contains(e.target)) {
+          setDashBoardDrawerOpen(false);
+        }
       }
     }
   };
@@ -88,7 +101,13 @@ const Navigation = () => {
             >
               Logout
             </button> */}
-            <div className="x w-10 h-10 rounded-full bg-white cursor-pointer overflow-hidden">
+            <div
+              className="x w-10 h-10 rounded-full bg-white cursor-pointer overflow-hidden"
+              ref={dashBoardBtnRef}
+              onClick={toggleDashBord}
+              // eslint-disable-next-line react/jsx-no-duplicate-props
+              ref={dashBoardBtnRef}
+            >
               <img src={logo} alt="" className="" />
             </div>
           </div>
@@ -143,24 +162,50 @@ const Navigation = () => {
               <li>
                 <Link to="/transactions">Transactions</Link>
               </li>
-              <li className="flex">
-                <Link
-                  to="order"
-                  className="bg-brand text-background px-3 py-1 rounded-md cursor-pointer flex items-center justify-between gap-5 font-bold"
-                >
-                  <i className="font-thin">
-                    <FaPlus />
-                  </i>
-                  ORDER
-                </Link>
-              </li>
-              <li>
-                <button className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer">
-                  Logout
-                </button>
-              </li>
+              <Link
+                to="order"
+                className="bg-brand text-background px-3 py-1 rounded-md cursor-pointer flex items-center justify-center gap-5 font-bold"
+                onClick={() => setDrawerOpen(false)}
+              >
+                <i className="font-thin">
+                  <FaPlus />
+                </i>
+                ORDER
+              </Link>
+              <button
+                className="bg-textPrimary text-background py-1 px-3 font-semibold rounded-md"
+                onClick={() => {
+                  setDrawerOpen(false);
+                  setDashBoardDrawerOpen(true);
+                }}
+                ref={dashBoardBtnRef2}
+              >
+                Dashboard
+              </button>
+              <button className="bg-textPrimary text-background px-3 py-1 font-semibold rounded-md cursor-pointer">
+                Logout
+              </button>
             </ul>
           </div>
+        </div>
+      </Drawer>
+      <Drawer
+        className={classes.list}
+        palette="secondary"
+        variant="persistent"
+        open={dashBoardDrawerOpen}
+        anchor="left"
+        classes={{ paper: classes.drawerPaper }}
+        ref={DashBoardDrawerRef}
+      >
+        <div className="p-2 max-w-[300px] w-screen flex flex-col gap-10">
+          <div className="flex justify-between items-center">
+            <div></div>
+            <i onClick={() => toggleDashBord()}>
+              <FaTimes />
+            </i>
+          </div>
+          <DashBoardDrawerBody toggleDashBord={toggleDashBord} />
         </div>
       </Drawer>
     </>

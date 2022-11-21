@@ -1,6 +1,7 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useRef, useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import OrderCart from './orderDesk.js/OrderCart';
 const useStyles = makeStyles({
   root: {
@@ -35,10 +36,11 @@ const CartDrawer = ({ totalItem }) => {
   };
 
   const handleClick = (e) => {
-    if (!menuBtnRef.current.contains(e.target)) {
-      if (!DrawerRef.current.contains(e.target)) {
-        console.log('hello world');
-        setDrawerOpen(false);
+    if (e.target.id !== 'DeleteCartItem') {
+      if (!menuBtnRef.current.contains(e.target)) {
+        if (!DrawerRef.current.contains(e.target)) {
+          setDrawerOpen(false);
+        }
       }
     }
   };
@@ -74,6 +76,16 @@ const CartDrawer = ({ totalItem }) => {
         classes={{ paper: classes.drawerPaper }}
         ref={DrawerRef}
       >
+        <div className="ml-5 mt-5">
+          <div
+            className="w-5 h-5 bg-brand text-background flex items-center justify-center rounded-full cursor-pointer"
+            onClick={toggleDrawer}
+          >
+            <i>
+              <FaTimes />
+            </i>
+          </div>
+        </div>
         <div className="p-2 w-[300px] sm:w-[400px] h-full">
           <OrderCart />
         </div>

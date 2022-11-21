@@ -4,7 +4,7 @@ import SubCategroy from './SubCategroy';
 
 const OrderDeskHeader = () => {
   return (
-    <div className="p-5 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       <MainCategory />
       <SubCategroy />
     </div>

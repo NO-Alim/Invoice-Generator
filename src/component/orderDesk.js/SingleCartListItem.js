@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import {
   decrementItem,
@@ -7,6 +6,7 @@ import {
   editItem,
   incrementItem,
 } from '../../features/cart/cartSlice';
+import deleteIcon from '../../img/delete.png';
 
 const SingleCartListItem = ({ item }) => {
   const { name, price, quantity, id } = item;
@@ -40,20 +40,6 @@ const SingleCartListItem = ({ item }) => {
   useEffect(() => {
     setValue(quantity);
   }, [quantity]);
-
-  // useEffect(() => {
-  //   if (!value || value === null || value === undefined) {
-  //     dispatch(deleteItem(id));
-  //   }
-
-  //   if (document.activeElement === inputRef.current) {
-  //     console.log('element has focus');
-  //   } else {
-  //     if (!value || value === null || value === undefined) {
-  //       dispatch(deleteItem(id));
-  //     }
-  //   }
-  // }, [value]);
 
   return (
     <>
@@ -97,12 +83,13 @@ const SingleCartListItem = ({ item }) => {
           $ {price * quantity}
         </td>
         <td className="flex items-center justify-center">
-          <i
-            className="cursor-pointer hover:text-brand all"
+          <img
+            className="cursor-pointer"
+            src={deleteIcon}
+            alt="delete"
             onClick={handleDelete}
-          >
-            <RiDeleteBin6Line />
-          </i>
+            id="DeleteCartItem"
+          />
         </td>
       </tr>
     </>

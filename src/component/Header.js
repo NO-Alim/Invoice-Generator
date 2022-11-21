@@ -41,7 +41,10 @@ const Header = () => {
   if (!loading && !error) {
     content = (
       <div className="flex flex-col sm:flex-row gap-10">
-        <IndividualSummary title="Total Item Sales" value={`$ ${totalPrice}`} />
+        <IndividualSummary
+          title="Total Sale amount"
+          value={`$ ${totalPrice}`}
+        />
         <IndividualSummary
           title="Total Products Sales"
           value={`${totalItem} Unit`}

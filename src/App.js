@@ -11,6 +11,7 @@ import Navigation from './component/Navigation';
 import PrintPage from './component/print/PrintPage';
 import LoaderSpin from './component/ui/LoaderSpin';
 import useAuth from './hooks/useAuth';
+import DashBoard from './pages/DashBoard';
 import FourOFour from './pages/FourOFour';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -74,6 +75,10 @@ function App() {
             element={
               currentUser ? <SingleTransaction /> : <Navigate to="/register" />
             }
+          />
+          <Route
+            path="/dashboard"
+            element={currentUser ? <DashBoard /> : <Navigate to="/register" />}
           />
           <Route path="*" element={<FourOFour />} />
         </Routes>

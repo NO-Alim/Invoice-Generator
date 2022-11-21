@@ -1,12 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { reset } from '../../features/cart/cartSlice';
 import CartList from './CartList';
 
 const OrderCart = () => {
   const { totalItem, totalPrice, productList } = useSelector(
     (state) => state.cart
   );
+  const dispatch = useDispatch();
+
+  const clearCart = () => {
+    dispatch(reset());
+  };
   return (
     <div className="p-5 flex flex-col h-full justify-between gap-5">
       <div className="flex item-center justify-between">
@@ -29,12 +35,20 @@ const OrderCart = () => {
         </div>
         <div className="flex items-center justify-center gap-5 w-full">
           {productList && productList.length > 0 && (
-            <Link
-              to="/print"
-              className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all"
-            >
-              <span>Check Out</span>
-            </Link>
+            <>
+              <Link
+                to="/print"
+                className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all"
+              >
+                <span>Check Out</span>
+              </Link>
+              <button
+                className="flex gap-2 items-center justify-center bg-brand/30 px-5 py-2 rounded-md text-lg border border-brand  hover:bg-brand hover:text-background all"
+                onClick={clearCart}
+              >
+                Clear Cart
+              </button>
+            </>
           )}
         </div>
       </div>
