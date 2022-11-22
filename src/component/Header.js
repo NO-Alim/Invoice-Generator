@@ -7,7 +7,6 @@ import IndividualSummary from './IndividualSummary';
 import LoaderSpin from './ui/LoaderSpin';
 const Header = () => {
   const { startDate, endDate } = useSelector((state) => state.headerDuration);
-
   const { transactions, loading, error } = useGetBetweenDateTransaction(
     startDate ? new Date(startDate) : '',
     endDate ? new Date(endDate) : ''
@@ -74,7 +73,6 @@ const Header = () => {
                 'LL'
               )}`}
           </span>
-          .
         </h1>
         {content}
       </div>

@@ -40,7 +40,6 @@ export default function useGetBetweenDateTransaction(start, end) {
     selectorStartDate &&
     selectorEndDate !== selectorStartDate
   ) {
-    console.log('1');
     q = query(
       q,
       where('timeStamp', '>=', start < end ? start : end), //choto date
@@ -53,7 +52,6 @@ export default function useGetBetweenDateTransaction(start, end) {
     selectorStartDate &&
     selectorEndDate === selectorStartDate
   ) {
-    console.log('2');
     q = query(q, where('timeStamp', '>=', end));
   }
 
@@ -79,6 +77,8 @@ export default function useGetBetweenDateTransaction(start, end) {
             const withKey = {
               totalPrice: doc.data().totalPrice,
               totalItem: doc.data().totalItem,
+              products: doc.data().products,
+              key: doc.id,
             };
             return withKey;
           });

@@ -31,7 +31,10 @@ const useGetProducts = (categoryString, subCategoryString) => {
       const unsubscribe = onSnapshot(
         q,
         (querySnapshot) => {
-          const data = querySnapshot.docs.map((doc) => doc.data());
+          const data = querySnapshot.docs.map((doc) => {
+            const withKey = { key: doc.id, ...doc.data() };
+            return withKey;
+          });
           setProducts(data);
           setLoading(false);
         },
@@ -45,7 +48,7 @@ const useGetProducts = (categoryString, subCategoryString) => {
       return;
     }
   }, [categoryString, subCategoryString]);
-  return { products, loading };
+  return { products, loading, error };
 };
 
 export default useGetProducts;

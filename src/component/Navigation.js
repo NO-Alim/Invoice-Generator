@@ -1,9 +1,10 @@
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useRef, useState } from 'react';
-import { FaPlus, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../img/logo.png';
+import plus from '../img/plus.png';
 import DashBoardDrawerBody from './DashBoardDrawerBody';
 
 const useStyles = makeStyles({
@@ -88,12 +89,11 @@ const Navigation = () => {
           <div className="flex gap-5 md:gap-10 items-center">
             <Link
               to="order"
-              className="bg-brand text-background px-3 py-1 rounded-md cursor-pointer flex items-center justify-between gap-5 font-bold"
+              className="bg-brand/80 all hover:bg-brand px-2 py-1 text-lg font-semibold rounded-sm flex gap-2 items-center justify-center text-background"
+              onClick={() => setDrawerOpen(false)}
             >
-              <i className="font-thin">
-                <FaPlus />
-              </i>
-              ORDER
+              <img src={plus} alt="plus" className="w-5 h-5" />
+              <h1>Order</h1>
             </Link>
             {/* <button
               className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer"
@@ -157,32 +157,34 @@ const Navigation = () => {
           <div>
             <ul className="list-none flex flex-col gap-5">
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/" onClick={() => setDrawerOpen(false)}>
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/transactions">Transactions</Link>
+                <Link to="/transactions" onClick={() => setDrawerOpen(false)}>
+                  Transactions
+                </Link>
               </li>
               <Link
                 to="order"
-                className="bg-brand text-background px-3 py-1 rounded-md cursor-pointer flex items-center justify-center gap-5 font-bold"
+                className="bg-brand/80 all hover:bg-brand px-2 py-1 text-lg font-semibold rounded-sm flex gap-2 items-center justify-center text-background"
                 onClick={() => setDrawerOpen(false)}
               >
-                <i className="font-thin">
-                  <FaPlus />
-                </i>
-                ORDER
+                <img src={plus} alt="plus" className="w-5 h-5" />
+                <h1>Order</h1>
               </Link>
               <button
-                className="bg-textPrimary text-background py-1 px-3 font-semibold rounded-md"
+                className="bg-textPrimary text-background py-1 px-3 font-semibold rounded-sm"
                 onClick={() => {
                   setDrawerOpen(false);
                   setDashBoardDrawerOpen(true);
                 }}
                 ref={dashBoardBtnRef2}
               >
-                Dashboard
+                Panel Board
               </button>
-              <button className="bg-textPrimary text-background px-3 py-1 font-semibold rounded-md cursor-pointer">
+              <button className="bg-textPrimary text-background px-3 py-1 font-semibold rounded-sm cursor-pointer">
                 Logout
               </button>
             </ul>

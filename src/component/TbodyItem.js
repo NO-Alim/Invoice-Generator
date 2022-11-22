@@ -10,14 +10,8 @@ const TbodyItem = ({ item }) => {
   };
   return (
     <>
-      <tr
-        className="w-full px-3 py-1 md:px-10 flex justify-between cursor-pointer"
-        onClick={handleClick}
-      >
-        <td className="flex-1 flex gap-2 items-center">
-          <span>
-            <input type="checkbox" />
-          </span>{' '}
+      <tr className="w-full px-3 py-1 md:px-10 flex justify-between cursor-pointer">
+        <td className="flex-1 flex gap-2 items-center" onClick={handleClick}>
           <span>
             {productNameArray.map((item, ind) => {
               return (
@@ -26,13 +20,15 @@ const TbodyItem = ({ item }) => {
             })}
           </span>
         </td>
-        <td className="flex-1 hidden md:block">
+        <td className="flex-1 hidden md:block" onClick={handleClick}>
           {moment.unix(timeStamp.seconds).format('L')}
         </td>
-        <td className="flex-1 hidden md:block">
+        <td className="flex-1 hidden md:block" onClick={handleClick}>
           {moment.unix(timeStamp.seconds).format('LTS')}
         </td>
-        <td className="flex-1">{totalPrice}</td>
+        <td className="flex-1" onClick={handleClick}>
+          {totalPrice}
+        </td>
         <td className="flex gap-3">
           <button>
             <i>
