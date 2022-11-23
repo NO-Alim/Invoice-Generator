@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { categoryFilter } from '../../features/orderDeskFilter/orderDeskFilter';
 import useGetCategory from '../../hooks/useGetCategory';
@@ -77,12 +78,15 @@ const MainCategory = () => {
             </div>
           ) : (
             <div>
-              <h1 className="text-2xl font-thin cursor-pointer">
+              <Link
+                to="/dashboard"
+                className="text-2xl font-thin cursor-pointer"
+              >
                 Add category before start.
                 <span className="text-textPrimary/50 ml-2">
                   (Food, Breakfast etc.)
                 </span>
-              </h1>
+              </Link>
             </div>
           )}
         </div>

@@ -2,7 +2,10 @@ import moment from 'moment/moment';
 import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import useDelete from '../hooks/useDelete';
 const TbodyItem = ({ item }) => {
+  const { deleteTransaction } = useDelete();
+
   const { productNameArray, totalPrice, timeStamp, key } = item || {};
   const navigate = useNavigate();
   const handleClick = () => {
@@ -10,7 +13,7 @@ const TbodyItem = ({ item }) => {
   };
   return (
     <>
-      <tr className="w-full px-3 py-1 md:px-10 flex justify-between cursor-pointer">
+      <tr className="w-full px-3 py-1 md:px-10 flex justify-between items-center cursor-pointer border-b border-borderPrimary/40 mb-2 pb-2">
         <td className="flex-1 flex gap-2 items-center" onClick={handleClick}>
           <span>
             {productNameArray.map((item, ind) => {
@@ -30,7 +33,7 @@ const TbodyItem = ({ item }) => {
           {totalPrice}
         </td>
         <td className="flex gap-3">
-          <button>
+          <button onClick={() => deleteTransaction(key)}>
             <i>
               <RiDeleteBin6Line />
             </i>

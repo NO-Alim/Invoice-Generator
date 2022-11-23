@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaSearch, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { nameFilter } from '../../../features/TransactionFilter/TransactionFilterSlice';
+import { nameFilter } from '../../features/TransactionFilter/TransactionFilterSlice';
 const TransactionListHeader = () => {
   const [inputValue, setInputValue] = useState('');
   const dispatch = useDispatch();

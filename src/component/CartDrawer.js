@@ -86,7 +86,7 @@ const CartDrawer = ({ totalItem }) => {
             </i>
           </div>
         </div>
-        <div className="p-2 w-[300px] sm:w-[400px] h-full">
+        <div className="p-2 w-screen sm:w-[400px] h-full">
           <OrderCart />
         </div>
       </Drawer>

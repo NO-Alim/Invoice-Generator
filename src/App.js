@@ -22,6 +22,7 @@ import Transactions from './pages/Transactions';
 function App() {
   const { currentUser, loading } = useAuth();
   const { productList, totalItem } = useSelector((state) => state.cart);
+
   if (loading)
     return (
       <div className="w-full h-screen flex justify-center items-center bg-background">

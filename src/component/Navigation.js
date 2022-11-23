@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 import logo from '../img/logo.png';
 import plus from '../img/plus.png';
 import DashBoardDrawerBody from './DashBoardDrawerBody';
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 const Navigation = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [dashBoardDrawerOpen, setDashBoardDrawerOpen] = useState(false);
+  const { currentUser, loading } = useAuth();
 
   const menuBtnRef = useRef(null);
   const dashBoardBtnRef = useRef(null);
@@ -95,12 +97,6 @@ const Navigation = () => {
               <img src={plus} alt="plus" className="w-5 h-5" />
               <h1>Order</h1>
             </Link>
-            {/* <button
-              className="bg-textPrimary text-background px-3 py-1 rounded-md cursor-pointer"
-              onClick={logOut}
-            >
-              Logout
-            </button> */}
             <div
               className="x w-10 h-10 rounded-full bg-white cursor-pointer overflow-hidden"
               ref={dashBoardBtnRef}
@@ -108,11 +104,27 @@ const Navigation = () => {
               // eslint-disable-next-line react/jsx-no-duplicate-props
               ref={dashBoardBtnRef}
             >
-              <img src={logo} alt="" className="" />
+              <img
+                src={
+                  currentUser?.photoURL
+                    ? currentUser.photoURL
+                    : 'https://cdn.pixabay.com/photo/2020/02/04/17/05/flowers-4818861_960_720.jpg'
+                }
+                alt=""
+                className=""
+              />
             </div>
           </div>
         </div>
-        <div className="menu md:hidden cursor-pointer">
+        <div className="menu md:hidden cursor-pointer flex gap-5 items-center">
+          <Link
+            to="order"
+            className="bg-brand/80 all hover:bg-brand px-1 text-lg font-semibold rounded-sm flex gap-2 items-center justify-center text-background"
+            onClick={() => setDrawerOpen(false)}
+          >
+            <img src={plus} alt="plus" className="w-5 h-5" />
+            <h1>Order</h1>
+          </Link>
           <div
             className={`w-[30px] h-[30px] flex flex-col justify-around`}
             onClick={() => toggleDrawer()}
@@ -145,7 +157,7 @@ const Navigation = () => {
         classes={{ paper: classes.drawerPaper }}
         ref={DrawerRef}
       >
-        <div className="p-2 max-w-[300px] w-screen flex flex-col gap-10">
+        <div className="p-2 w-screen sm:w-[400px] flex flex-col gap-10">
           <div className="flex justify-between items-center">
             <NavLink to="/">
               <img className="w-16" src={logo} alt="mralim" />
@@ -166,14 +178,6 @@ const Navigation = () => {
                   Transactions
                 </Link>
               </li>
-              <Link
-                to="order"
-                className="bg-brand/80 all hover:bg-brand px-2 py-1 text-lg font-semibold rounded-sm flex gap-2 items-center justify-center text-background"
-                onClick={() => setDrawerOpen(false)}
-              >
-                <img src={plus} alt="plus" className="w-5 h-5" />
-                <h1>Order</h1>
-              </Link>
               <button
                 className="bg-textPrimary text-background py-1 px-3 font-semibold rounded-sm"
                 onClick={() => {
@@ -182,7 +186,7 @@ const Navigation = () => {
                 }}
                 ref={dashBoardBtnRef2}
               >
-                Panel Board
+                Control Panel
               </button>
               <button className="bg-textPrimary text-background px-3 py-1 font-semibold rounded-sm cursor-pointer">
                 Logout
@@ -200,7 +204,7 @@ const Navigation = () => {
         classes={{ paper: classes.drawerPaper }}
         ref={DashBoardDrawerRef}
       >
-        <div className="p-2 max-w-[300px] w-screen flex flex-col gap-10">
+        <div className="p-2 w-screen sm:w-[400px] flex flex-col gap-10">
           <div className="flex justify-between items-center">
             <div></div>
             <i onClick={() => toggleDashBord()}>

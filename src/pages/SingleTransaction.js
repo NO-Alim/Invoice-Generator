@@ -1,8 +1,8 @@
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import SingleTransactionBody from '../component/TransactionPage/SingleTransactionBody';
 import LoaderSpin from '../component/ui/LoaderSpin';
-import SingleTransactionBody from '../component/ui/TransactionPage/SingleTransactionBody';
 
 const SingleTransaction = () => {
   const { id } = useParams();

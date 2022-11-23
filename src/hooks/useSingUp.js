@@ -17,9 +17,11 @@ const useSingUp = () => {
     if (user) {
       await setDoc(doc(db, 'users', user.uid), {
         bio: {
-          name: user.displayName,
-          avatarUrl:
-            'https://robohash.org/51f20e771c1c5876dbc9be6fa690132a?set=set4&bgset=&size=400x400',
+          address: '',
+          website: '',
+          contact: '',
+          shopName: '',
+          currency: '',
         },
       });
       await setDoc(doc(db, 'products', user.uid), {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { subCategoryFilter } from '../../features/orderDeskFilter/orderDeskFilter';
 import useGetSubCategory from '../../hooks/useGetSubCategory';
@@ -77,12 +78,15 @@ const SubCategory = () => {
             </div>
           ) : (
             <div>
-              <h1 className="text-2xl font-thin cursor-pointer" s>
-                Add sub a sub category before start.
+              <Link
+                to="/dashboard"
+                className="text-2xl font-thin cursor-pointer"
+              >
+                Add sub category before start.
                 <span className="text-textPrimary/50 ml-2">
                   (Pizza, coca-cola etc.)
                 </span>
-              </h1>
+              </Link>
             </div>
           )}
         </div>

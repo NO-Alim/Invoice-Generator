@@ -1,7 +1,7 @@
 import React from 'react';
 import TbodyItem from '../component/TbodyItem';
+import TransactionListHeader from '../component/TransactionPage/TransactionListHeader';
 import LoaderSpin from '../component/ui/LoaderSpin';
-import TransactionListHeader from '../component/ui/TransactionPage/TransactionListHeader';
 import usePagination from '../hooks/usePagination';
 
 const Transactions = () => {
