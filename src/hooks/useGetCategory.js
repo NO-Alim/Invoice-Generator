@@ -31,12 +31,19 @@ export default function useGetCategory() {
           // querySnapshot.forEach((doc) => {
           //   data.push(doc.data());
           // });
-          const data = querySnapshot.docs.map((doc) => doc.data());
+          const data = querySnapshot.docs.map((doc) => {
+            const withKey = {
+              key: doc.id,
+              ...doc.data(),
+            };
+            return withKey;
+          });
           setCategory(data);
           setLoading(false);
         },
         (error) => {
           setError(error);
+          setLoading(false);
         }
       );
 

@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import '../firebase';
 
-export default function useGetBetweenDateTransaction(start, end) {
+export default function useGetBetweenDateTransaction() {
   const { startDate: selectorStartDate, endDate: selectorEndDate } =
     useSelector((state) => state.headerDuration);
 
@@ -35,36 +35,65 @@ export default function useGetBetweenDateTransaction(start, end) {
     orderBy('timeStamp', 'desc')
   );
 
+  //logic one
+  //when start and end different
   if (
     selectorEndDate &&
     selectorStartDate &&
     selectorEndDate !== selectorStartDate
   ) {
+    const bigDate =
+      selectorEndDate > selectorStartDate ? selectorEndDate : selectorStartDate;
+    let myDate = new Date(`${bigDate}`);
+    let myDay = myDate.getDate() + 1;
+    let myMonth = myDate.getMonth() + 1;
+    let myYear = myDate.getFullYear();
     q = query(
       q,
-      where('timeStamp', '>=', start < end ? start : end), //choto date
-      where('timeStamp', '<=', start > end ? start : end) //boro date
+      where(
+        'timeStamp',
+        '>=',
+        selectorEndDate < selectorStartDate
+          ? new Date(`${selectorEndDate}`) //end
+          : new Date(`${selectorStartDate}`) //start
+      ), //choto date
+      where('timeStamp', '<=', new Date(`${myYear}-${myMonth}-${myDay}`)) //boro date
     );
   }
+
+  //logic two
+  //when both are same date
 
   if (
     selectorEndDate &&
     selectorStartDate &&
     selectorEndDate === selectorStartDate
   ) {
-    q = query(q, where('timeStamp', '>=', end));
+    let myDate = new Date(`${selectorEndDate}`);
+    let myDay = myDate.getDate() + 1;
+    let myMonth = myDate.getMonth() + 1;
+    let myYear = myDate.getFullYear();
+
+    q = query(
+      q,
+      where('timeStamp', '>=', new Date(`${selectorEndDate}`)), // >= same selected date
+      where('timeStamp', '<', new Date(`${myYear}-${myMonth}-${myDay}`)) // < same selected date + 1
+    );
   }
 
-  if (!start && end) {
-    q = query(q, where('timeStamp', '>=', end));
-  }
+  //logic three
+  //when there is no date
 
-  if (!end && start) {
-    q = query(q, where('timeStamp', '>=', start));
-  }
-
-  if (!start && !end) {
-    q = query(q, where('timeStamp', '>=', today));
+  if (!selectorStartDate && !selectorEndDate) {
+    //if it's less then 6am should be show previous date data. because our day start from 06:00am
+    if (date.getHours() < 6) {
+      day = date.getDate() - 1;
+    }
+    q = query(
+      q,
+      where('timeStamp', '>=', new Date(`${year}-${month}-${day}`)), // >= same selected date - 1
+      where('timeStamp', '<', today) // <= today
+    );
   }
 
   useEffect(() => {

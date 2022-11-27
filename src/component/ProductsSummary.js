@@ -41,7 +41,6 @@ const ProductsSummary = () => {
       </div>
     );
   }
-  console.log(products);
   return <div>{content}</div>;
 };
 

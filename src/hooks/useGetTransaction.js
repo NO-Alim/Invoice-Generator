@@ -49,6 +49,7 @@ export default function useGetTransaction(name, itemLimit) {
         },
         (error) => {
           setError(error);
+          setLoading(false);
         }
       );
 

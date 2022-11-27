@@ -28,12 +28,19 @@ export default function useGetSubCategory(queryString) {
       const unsubscribe = onSnapshot(
         q,
         (querySnapshot) => {
-          const data = querySnapshot.docs.map((doc) => doc.data());
+          const data = querySnapshot.docs.map((doc) => {
+            const withKey = {
+              key: doc.id,
+              ...doc.data(),
+            };
+            return withKey;
+          });
           setSubCategory(data);
           setLoading(false);
         },
         (error) => {
           setError(error);
+          setLoading(false);
         }
       );
 
@@ -43,5 +50,5 @@ export default function useGetSubCategory(queryString) {
     }
   }, [queryString]);
 
-  return { subCategory, loading };
+  return { subCategory, loading, error };
 }

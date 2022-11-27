@@ -108,7 +108,7 @@ const Navigation = () => {
                 src={
                   currentUser?.photoURL
                     ? currentUser.photoURL
-                    : 'https://cdn.pixabay.com/photo/2020/02/04/17/05/flowers-4818861_960_720.jpg'
+                    : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_960_720.png'
                 }
                 alt=""
                 className=""
@@ -187,9 +187,6 @@ const Navigation = () => {
                 ref={dashBoardBtnRef2}
               >
                 Control Panel
-              </button>
-              <button className="bg-textPrimary text-background px-3 py-1 font-semibold rounded-sm cursor-pointer">
-                Logout
               </button>
             </ul>
           </div>

@@ -1,10 +1,15 @@
 import moment from 'moment/moment';
-import React from 'react';
+import React, { useState } from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import useDelete from '../hooks/useDelete';
+import { precisionRound } from '../utils/PrecisionRound';
+import DeleteTransactionModal from './DeleteTransactionModal';
 const TbodyItem = ({ item }) => {
-  const { deleteTransaction } = useDelete();
+  const [open, setOpen] = useState(false);
+
+  const control = () => {
+    setOpen(!open);
+  };
 
   const { productNameArray, totalPrice, timeStamp, key } = item || {};
   const navigate = useNavigate();
@@ -30,16 +35,21 @@ const TbodyItem = ({ item }) => {
           {moment.unix(timeStamp.seconds).format('LTS')}
         </td>
         <td className="flex-1" onClick={handleClick}>
-          {totalPrice}
+          ${precisionRound(Number(totalPrice), 2)}
         </td>
         <td className="flex gap-3">
-          <button onClick={() => deleteTransaction(key)}>
+          <button onClick={control}>
             <i>
               <RiDeleteBin6Line />
             </i>
           </button>
         </td>
       </tr>
+      <DeleteTransactionModal
+        open={open}
+        control={control}
+        transactionKey={key}
+      />
     </>
   );
 };

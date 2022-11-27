@@ -1,16 +1,17 @@
 import moment from 'moment/moment';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import useGetBetweenDateTransaction from '../hooks/useGetBetweenDateTransaction';
+import { precisionRound } from '../utils/PrecisionRound';
 import HeaderDurationModal from './HeaderDurationModal';
 import IndividualSummary from './IndividualSummary';
 import LoaderSpin from './ui/LoaderSpin';
 const Header = () => {
   const { startDate, endDate } = useSelector((state) => state.headerDuration);
-  const { transactions, loading, error } = useGetBetweenDateTransaction(
-    startDate ? new Date(startDate) : '',
-    endDate ? new Date(endDate) : ''
-  );
+  const { transactions, loading, error } = useGetBetweenDateTransaction();
+  // startDate ? new Date(startDate) : '',
+  // endDate ? new Date(endDate) : ''
 
   //today
   const date = new Date();
@@ -42,7 +43,7 @@ const Header = () => {
       <div className="flex flex-col sm:flex-row gap-10">
         <IndividualSummary
           title="Total Sale amount"
-          value={`$ ${totalPrice}`}
+          value={`$ ${precisionRound(Number(totalPrice), 2)}`}
         />
         <IndividualSummary
           title="Total Products Sales"
@@ -53,7 +54,7 @@ const Header = () => {
   }
   return (
     <>
-      <div className="section bg-background/90 text-textPrimary flex flex-col gap-10">
+      <div className="section text-textPrimary flex flex-col gap-10">
         <h1 className="text-2xl font-thin">
           Here's What's Happen With Your Store{' '}
           <span
@@ -75,6 +76,14 @@ const Header = () => {
           </span>
         </h1>
         {content}
+        <div className="flex items-center justify-center">
+          <Link
+            to="/dashboard"
+            className="bg-brand/80 all hover:bg-brand px-2 py-1 text-lg font-semibold rounded-sm flex gap-2 items-center justify-center text-background"
+          >
+            More Info
+          </Link>
+        </div>
       </div>
       <HeaderDurationModal open={openModal} control={controlModal} />
     </>

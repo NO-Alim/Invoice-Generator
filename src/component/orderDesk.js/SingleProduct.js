@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, incrementItem } from '../../features/cart/cartSlice';
+import { precisionRound } from '../../utils/PrecisionRound';
 
 const SingleProduct = ({ item }) => {
   const dispatch = useDispatch();
@@ -37,7 +38,9 @@ const SingleProduct = ({ item }) => {
       onClick={handleClick}
     >
       <h1 className=" text-xl font-thin">{productName}</h1>
-      <h1 className="text-textPrimary/50 ml-2 text-2xl">$ {productPrice}</h1>
+      <h1 className="text-textPrimary/50 ml-2 text-2xl">
+        $ {precisionRound(Number(productPrice), 2)}
+      </h1>
     </div>
   );
 };

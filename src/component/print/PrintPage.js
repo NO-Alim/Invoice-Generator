@@ -41,10 +41,10 @@ const PrintPage = () => {
         >
           <div className="flex justify-end">
             <div>
-              <h3 className="font-semibold">Arafat Shop Company</h3>
-              <h3 className="font-semibold">234 6th Ave, DHAKA,</h3>
-              <h3 className="font-semibold">arafatHossain@gmail.com</h3>
-              <h3 className="font-semibold">www.aitaseta.com</h3>
+              <h3 className="font-semibold">SAFWAT IZKI TRAD</h3>
+              <h3 className="font-semibold">Arafathossain6263@gmail.com</h3>
+              <h3 className="font-semibold">+96891207297</h3>
+              <h3 className="font-semibold">---------</h3>
             </div>
           </div>
           <div className="flex flex-col gap-2">

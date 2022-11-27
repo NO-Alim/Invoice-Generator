@@ -7,10 +7,16 @@ import SingleProduct from './SingleProduct';
 
 const ProductList = () => {
   const { category, subCategory } = useSelector((state) => state.orderDesk);
-  const { products, loading } = useGetProducts(category, subCategory);
+  const { products, loading, error } = useGetProducts(category, subCategory);
   let content;
   if (loading) content = <LoaderSpin />;
-  if (!loading) {
+  if (!loading && error) {
+    content = (
+      <h1 className="x text-red-600 text-xl text-center">{error.message}</h1>
+    );
+  }
+
+  if (!loading && !error) {
     content = (
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 px-5 overflow-y-auto max-h-80">
         {products && products.length > 0 ? (

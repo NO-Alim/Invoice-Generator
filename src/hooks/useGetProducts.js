@@ -40,6 +40,7 @@ const useGetProducts = (categoryString, subCategoryString) => {
         },
         (error) => {
           setError(error);
+          setLoading(false);
         }
       );
 

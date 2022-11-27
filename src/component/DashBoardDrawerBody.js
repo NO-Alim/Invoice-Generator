@@ -72,7 +72,7 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
             src={
               currentUser?.photoURL
                 ? currentUser.photoURL
-                : 'https://cdn.pixabay.com/photo/2020/02/04/17/05/flowers-4818861_960_720.jpg'
+                : 'https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_960_720.png'
             }
             alt=""
             className="w-10 h-10 rounded-full"

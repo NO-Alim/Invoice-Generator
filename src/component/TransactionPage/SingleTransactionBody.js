@@ -1,5 +1,6 @@
 import moment from 'moment/moment';
 import React from 'react';
+import { precisionRound } from '../../utils/PrecisionRound';
 
 const SingleTransactionBody = ({ data }) => {
   const { products, totalPrice, timeStamp, totalItem, invoice } = data || {};
@@ -34,14 +35,19 @@ const SingleTransactionBody = ({ data }) => {
         <div className="flex-1">Unit Price</div>
         <div className="flex-1">Total Price</div>
       </div>
-      {products.map((item) => {
-        const { name, price, quantity } = item || {};
+      {products.map((item, ind) => {
+        const { name, price, quantity, key } = item || {};
         return (
-          <div className="flex gap-2 items-center justify-between px-5 capitalize text-sm sm:text-lg">
+          <div
+            className="flex gap-2 items-center justify-between px-5 capitalize text-sm sm:text-lg"
+            key={ind}
+          >
             <div className="flex-1">{name}</div>
             <div className="flex-1">{quantity} unit</div>
-            <div className="flex-1">{price}</div>
-            <div className="flex-1">$ {price * quantity}</div>
+            <div className="flex-1">${precisionRound(Number(price), 2)}</div>
+            <div className="flex-1">
+              $ {precisionRound(Number(price * quantity), 2)}
+            </div>
           </div>
         );
       })}
@@ -55,8 +61,8 @@ const SingleTransactionBody = ({ data }) => {
           <h1 className="">Due</h1>
         </div>
         <div className="col-span-1">
-          <h1>$ {totalPrice}</h1>
-          <h1>$ {totalPrice}</h1>
+          <h1>$ {precisionRound(Number(totalPrice), 2)}</h1>
+          <h1>$ {precisionRound(Number(totalPrice), 2)}</h1>
           <h1>$ 00.00</h1>
         </div>
       </div>

@@ -7,6 +7,7 @@ import {
   incrementItem,
 } from '../../features/cart/cartSlice';
 import deleteIcon from '../../img/delete.png';
+import { precisionRound } from '../../utils/PrecisionRound';
 
 const SingleCartListItem = ({ item }) => {
   const { name, price, quantity, id } = item;
@@ -80,7 +81,7 @@ const SingleCartListItem = ({ item }) => {
           </p>
         </td>
         <td className="flex-1 flex items-center justify-center">
-          $ {price * quantity}
+          $ {precisionRound(Number(price * quantity), 2)}
         </td>
         <td className="flex items-center justify-center">
           <img

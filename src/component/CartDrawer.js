@@ -87,7 +87,7 @@ const CartDrawer = ({ totalItem }) => {
           </div>
         </div>
         <div className="p-2 w-screen sm:w-[400px] h-full">
-          <OrderCart />
+          <OrderCart toggleDrawer={toggleDrawer} />
         </div>
       </Drawer>
     </>

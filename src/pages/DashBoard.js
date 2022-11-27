@@ -2,11 +2,12 @@ import moment from 'moment/moment';
 import React, { useState } from 'react';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import DashBoardBtnContainer from '../component/DashBoardBtnContainer';
+import DashBoardHeader from '../component/DashBoardHeader';
 import HeaderDurationModal from '../component/HeaderDurationModal';
 import ProductsSummary from '../component/ProductsSummary';
 import LoaderSpin from '../component/ui/LoaderSpin';
 import useGetBetweenDateTransaction from '../hooks/useGetBetweenDateTransaction';
+import { precisionRound } from '../utils/PrecisionRound';
 
 const DashBoard = () => {
   const { startDate, endDate } = useSelector((state) => state.headerDuration);
@@ -48,7 +49,7 @@ const DashBoard = () => {
       <>
         <div className="bg-background rounded-md sub-section flex-1 text-center">
           <h1 className="text-xl font-thin">Sales Values</h1>
-          <h1 className="text-3xl">${totalPrice}</h1>
+          <h1 className="text-3xl">${precisionRound(Number(totalPrice), 2)}</h1>
         </div>
         <div className="bg-background rounded-md sub-section flex-1 text-center">
           <h1 className="text-xl font-thin">Total Products Sales</h1>
@@ -64,7 +65,8 @@ const DashBoard = () => {
   return (
     <>
       <div className="section bg-background/90 text-textPrimary min-h-screen flex flex-col gap-5 md:gap-10">
-        <DashBoardBtnContainer />
+        {/* <DashBoardBtnContainer /> */}
+        <DashBoardHeader />
         <div className="flex gap-5 flex-wrap" onClick={controlModal}>
           <span className="text-brand text-xl cursor-pointer border-b-2 border-brand">
             {!startDate && !endDate && 'Today'}
