@@ -16,6 +16,8 @@ import useUserInfo from '../hooks/useUserInfo';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    borderRadius: '5px',
+    overflow: 'hidden',
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -25,7 +27,18 @@ const useStyles = makeStyles((theme) => ({
 
 const DashBoardDrawerBody = ({ toggleDashBord }) => {
   const { currentUser, loading, updateUser, error } = useAuth();
-  const { updateContact, userInfo, updateWebsite } = useUserInfo();
+  const {
+    updateContact,
+    updateWebsite,
+    updateAddress,
+    updateShopName,
+    updateCurrency,
+    contact: useContact,
+    address: useAddress,
+    website: useWebsite,
+    shopName: useShopName,
+    currency: useCurrency,
+  } = useUserInfo();
 
   const classes = useStyles();
   const { logOut } = useLogOut();
@@ -34,11 +47,17 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
   const [editMood2, setEditMood2] = useState(false);
   const [editMood3, setEditMood3] = useState(false);
   const [editMood4, setEditMood4] = useState(false);
+  const [editMood5, setEditMood5] = useState(false);
+  const [editMood6, setEditMood6] = useState(false);
+
   const [imgUrlEditMood, setImgUrlEditMood] = useState(false);
   const [name, setName] = useState('');
   const [contact, setContact] = useState(0);
   const [photoUrl, setPhotoUrl] = useState('');
   const [webSite, setWebSite] = useState('');
+  const [address, setAddress] = useState('');
+  const [shopName, setShopName] = useState('');
+  const [currency, setCurrency] = useState('');
 
   const changePhoto = (e) => {
     e.preventDefault();
@@ -61,6 +80,24 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
     e.preventDefault();
     updateWebsite(webSite);
     setEditMood3(false);
+  };
+
+  const changeAddress = (e) => {
+    e.preventDefault();
+    updateAddress(address);
+    setEditMood4(false);
+  };
+
+  const changeShopName = (e) => {
+    e.preventDefault();
+    updateShopName(shopName);
+    setEditMood5(false);
+  };
+
+  const changeCurrency = (e) => {
+    e.preventDefault();
+    updateCurrency(currency);
+    setEditMood6(false);
   };
 
   return (
@@ -104,7 +141,7 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
         )}
         <h1>{currentUser?.displayName}</h1>
       </div>
-      <Accordion>
+      <Accordion className={classes.root}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -160,6 +197,80 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
                 </div>
               </div>
             </div>
+            {/*  */}
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col gap-1">
+                <label className="text-sm text-background/70">Shop Name</label>
+                {!editMood5 && <span>{useShopName}</span>}
+                {editMood5 && (
+                  <form
+                    className="flex border border-background/90 overflow-hidden rounded-md"
+                    onSubmit={changeShopName}
+                  >
+                    <input
+                      type="text"
+                      value={shopName}
+                      onChange={(e) => setShopName(e.target.value)}
+                      className="px-2 w-28 border-b focus:outline-0 focus:border-0"
+                    />
+                    <button className="bg-background text-textPrimary rounded-r-md px-2 py-1">
+                      Submit
+                    </button>
+                  </form>
+                )}
+              </div>
+              <div>
+                <div
+                  className="bg-background/20 p-1 rounded-sm cursor-pointer"
+                  onClick={() => setEditMood5(!editMood5)}
+                >
+                  <i>
+                    {!editMood5 ? (
+                      <img src={edit} alt="edit" className="w-4 h-4" />
+                    ) : (
+                      <img src={close} alt="edit" className="w-4 h-4" />
+                    )}
+                  </i>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col gap-1">
+                <label className="text-sm text-background/70">Currency</label>
+                {!editMood6 && <span>{useCurrency}</span>}
+                {editMood6 && (
+                  <form
+                    className="flex border border-background/90 overflow-hidden rounded-md"
+                    onSubmit={changeCurrency}
+                  >
+                    <input
+                      type="text"
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value)}
+                      className="px-2 w-28 border-b focus:outline-0 focus:border-0"
+                    />
+                    <button className="bg-background text-textPrimary rounded-r-md px-2 py-1">
+                      Submit
+                    </button>
+                  </form>
+                )}
+              </div>
+              <div>
+                <div
+                  className="bg-background/20 p-1 rounded-sm cursor-pointer"
+                  onClick={() => setEditMood6(!editMood6)}
+                >
+                  <i>
+                    {!editMood6 ? (
+                      <img src={edit} alt="edit" className="w-4 h-4" />
+                    ) : (
+                      <img src={close} alt="edit" className="w-4 h-4" />
+                    )}
+                  </i>
+                </div>
+              </div>
+            </div>
+            {/*  */}
             <div className="flex flex-col gap-1">
               <label className="text-sm text-background/70">Email</label>
               <span>{currentUser?.email}</span>
@@ -167,7 +278,7 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
             <div className="flex justify-between items-center w-full">
               <div className="flex flex-col gap-1">
                 <label className="text-sm text-background/70">contact</label>
-                {!editMood2 && <span>{userInfo?.contact}</span>}
+                {!editMood2 && <span>{useContact}</span>}
                 {editMood2 && (
                   <form
                     className="flex border border-background/90 overflow-hidden rounded-md"
@@ -201,10 +312,11 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
                 </div>
               </div>
             </div>
+
             <div className="flex justify-between items-center w-full">
               <div className="flex flex-col gap-1">
                 <label className="text-sm text-background/70">website</label>
-                {!editMood3 && <span>{userInfo?.website}</span>}
+                {!editMood3 && <span>{useWebsite}</span>}
                 {editMood3 && (
                   <form
                     className="flex border border-background/90 overflow-hidden rounded-md"
@@ -238,18 +350,55 @@ const DashBoardDrawerBody = ({ toggleDashBord }) => {
                 </div>
               </div>
             </div>
+            <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col gap-1">
+                <label className="text-sm text-background/70">address</label>
+                {!editMood4 && <span>{useAddress}</span>}
+                {editMood4 && (
+                  <form
+                    className="flex border border-background/90 overflow-hidden rounded-md"
+                    onSubmit={changeAddress}
+                  >
+                    {/* value should be existing name */}
+                    <input
+                      type="text"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="px-2 w-28 border-b focus:outline-0 focus:border-0"
+                    />
+                    <button className="bg-background text-textPrimary rounded-r-md px-2 py-1">
+                      Submit
+                    </button>
+                  </form>
+                )}
+              </div>
+              <div>
+                <div
+                  className="bg-background/20 p-1 rounded-sm cursor-pointer"
+                  onClick={() => setEditMood4(!editMood4)}
+                >
+                  <i>
+                    {!editMood4 ? (
+                      <img src={edit} alt="edit" className="w-4 h-4" />
+                    ) : (
+                      <img src={close} alt="edit" className="w-4 h-4" />
+                    )}
+                  </i>
+                </div>
+              </div>
+            </div>
           </div>
         </AccordionDetails>
       </Accordion>
       <Link
         to="dashboard"
-        className="bg-textPrimary text-center text-background px-3 py-1 cursor-pointer"
+        className="bg-textPrimary text-center rounded-md text-background px-3 py-1 cursor-pointer"
         onClick={toggleDashBord}
       >
         Dashboard
       </Link>
       <button
-        className="bg-textPrimary text-background px-3 py-1 cursor-pointer"
+        className="bg-textPrimary text-background rounded-md px-3 py-1 cursor-pointer"
         onClick={logOut}
       >
         Logout

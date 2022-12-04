@@ -31,6 +31,7 @@ const Header = () => {
     0
   );
   const totalItem = transactions.reduce((acc, curr) => acc + curr.totalItem, 0);
+  const currency = localStorage.getItem('currency');
 
   let content;
   if (loading) content = <LoaderSpin />;
@@ -43,7 +44,7 @@ const Header = () => {
       <div className="flex flex-col sm:flex-row gap-10">
         <IndividualSummary
           title="Total Sale amount"
-          value={`$ ${precisionRound(Number(totalPrice), 2)}`}
+          value={`${currency} ${precisionRound(Number(totalPrice), 2)}`}
         />
         <IndividualSummary
           title="Total Products Sales"

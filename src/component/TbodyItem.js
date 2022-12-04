@@ -7,6 +7,8 @@ import DeleteTransactionModal from './DeleteTransactionModal';
 const TbodyItem = ({ item }) => {
   const [open, setOpen] = useState(false);
 
+  const currency = localStorage.getItem('currency');
+
   const control = () => {
     setOpen(!open);
   };
@@ -35,7 +37,8 @@ const TbodyItem = ({ item }) => {
           {moment.unix(timeStamp.seconds).format('LTS')}
         </td>
         <td className="flex-1" onClick={handleClick}>
-          ${precisionRound(Number(totalPrice), 2)}
+          {currency}
+          {precisionRound(Number(totalPrice), 2)}
         </td>
         <td className="flex gap-3">
           <button onClick={control}>

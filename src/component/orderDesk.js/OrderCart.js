@@ -14,6 +14,7 @@ const OrderCart = ({ toggleDrawer }) => {
   const clearCart = () => {
     dispatch(reset());
   };
+  const currency = localStorage.getItem('currency');
   return (
     <div className="p-5 flex flex-col h-full justify-between gap-5">
       <div className="flex item-center justify-between">
@@ -32,7 +33,10 @@ const OrderCart = ({ toggleDrawer }) => {
       <div className="flex flex-col gap-5 flex-1 items-start">
         <div className="flex justify-between items-center w-full">
           <h2 className="text-2xl">SubTotal: </h2>
-          <h2 className="text-2xl">${precisionRound(Number(totalPrice), 2)}</h2>
+          <h2 className="text-2xl">
+            {currency}
+            {precisionRound(Number(totalPrice), 2)}
+          </h2>
         </div>
         <div className="flex items-center justify-center gap-5 w-full">
           {productList && productList.length > 0 && (

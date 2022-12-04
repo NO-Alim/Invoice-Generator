@@ -12,20 +12,44 @@ const useUserInfo = () => {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  useEffect(() => {
-    if (user?.uid) {
-      const unsubscribe = onSnapshot(doc(db, 'users', user.uid), (doc) => {
-        setLoading(true);
-        setUserInfo(doc.data().bio);
-        setLoading(false);
-      });
+  const contact = localStorage.getItem('contact');
+  const website = localStorage.getItem('website');
+  const address = localStorage.getItem('address');
+  const shopName = localStorage.getItem('shopName');
+  const currency = localStorage.getItem('currency');
 
-      return unsubscribe;
+  useEffect(() => {
+    if (!contact || !website || !address || !shopName || !currency) {
+      if (user?.uid) {
+        const unsubscribe = onSnapshot(
+          doc(db, 'users', user.uid),
+          (doc) => {
+            setLoading(true);
+            setUserInfo(doc.data().bio);
+            //
+            localStorage.setItem('contact', doc.data().bio.contact);
+            localStorage.setItem('website', doc.data().bio.website);
+            localStorage.setItem('address', doc.data().bio.address);
+            localStorage.setItem('shopName', doc.data().bio.shopName);
+            localStorage.setItem('currency', doc.data().bio.currency);
+
+            setLoading(false);
+          },
+          (error) => {
+            setError(error);
+            setLoading(false);
+          }
+        );
+
+        return unsubscribe;
+      }
     }
   });
   const updateContact = (phoneNumber) => {
     if (user?.uid) {
       const docRef = doc(db, 'users', user.uid);
+      //set in localStorage
+      localStorage.setItem('contact', phoneNumber);
 
       updateDoc(docRef, {
         'bio.contact': phoneNumber,
@@ -43,6 +67,8 @@ const useUserInfo = () => {
     if (user?.uid) {
       const docRef = doc(db, 'users', user.uid);
 
+      localStorage.setItem('website', website);
+
       updateDoc(docRef, {
         'bio.website': website,
       })
@@ -58,7 +84,7 @@ const useUserInfo = () => {
   const updateAddress = (address) => {
     if (user?.uid) {
       const docRef = doc(db, 'users', user.uid);
-
+      localStorage.setItem('address', address);
       updateDoc(docRef, {
         'bio.address': address,
       })
@@ -74,7 +100,7 @@ const useUserInfo = () => {
   const updateShopName = (shop) => {
     if (user?.uid) {
       const docRef = doc(db, 'users', user.uid);
-
+      localStorage.setItem('shopName', shop);
       updateDoc(docRef, {
         'bio.shopName': shop,
       })
@@ -90,6 +116,7 @@ const useUserInfo = () => {
   const updateCurrency = (sing) => {
     if (user?.uid) {
       const docRef = doc(db, 'users', user.uid);
+      localStorage.setItem('currency', sing);
 
       updateDoc(docRef, {
         'bio.currency': sing,
@@ -104,7 +131,6 @@ const useUserInfo = () => {
   };
 
   return {
-    userInfo,
     loading,
     error,
     success,
@@ -113,6 +139,11 @@ const useUserInfo = () => {
     updateAddress,
     updateShopName,
     updateCurrency,
+    contact,
+    address,
+    website,
+    shopName,
+    currency,
   };
 };
 

@@ -15,6 +15,8 @@ const SingleCartListItem = ({ item }) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
+  const currency = localStorage.getItem('currency');
+
   const handleIncrement = () => {
     dispatch(incrementItem(item));
   };
@@ -81,7 +83,7 @@ const SingleCartListItem = ({ item }) => {
           </p>
         </td>
         <td className="flex-1 flex items-center justify-center">
-          $ {precisionRound(Number(price * quantity), 2)}
+          {currency} {precisionRound(Number(price * quantity), 2)}
         </td>
         <td className="flex items-center justify-center">
           <img

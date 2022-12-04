@@ -1,4 +1,3 @@
-import _uniqueId from 'lodash/uniqueId';
 import moment from 'moment/moment';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaSave } from 'react-icons/fa';
@@ -7,22 +6,34 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 import useAddTransaction from '../../hooks/useAddTransaction';
+import useAuth from '../../hooks/useAuth';
 import PrintedItemList from './PrintedItemList';
 import PrintedSubtotal from './PrintedSubtotal';
 
 const PrintPage = () => {
+  const { currentUser, loading, error } = useAuth();
+
   const { addTransaction } = useAddTransaction();
   const [height, setHeight] = useState(0);
   const { cart } = useSelector((state) => state);
   const printComponentRef = React.createRef();
 
-  let invoiceNumber = _uniqueId('invoice #');
+  const now = new Date();
+  const second = Math.floor(now.getTime() / 1000);
+
+  let invoiceNumber = 'invoice#' + second;
 
   const handleSave = () => {
     addTransaction(cart, invoiceNumber);
   };
 
   let date = new Date().toLocaleDateString();
+
+  const contact = localStorage.getItem('contact');
+  const website = localStorage.getItem('website');
+  const address = localStorage.getItem('address');
+  const shopName = localStorage.getItem('shopName');
+  const currency = localStorage.getItem('currency');
 
   useEffect(() => {
     let clientHeight = Math.round(printComponentRef.current.clientHeight / 96);
@@ -41,10 +52,11 @@ const PrintPage = () => {
         >
           <div className="flex justify-end">
             <div>
-              <h3 className="font-semibold">SAFWAT IZKI TRAD</h3>
-              <h3 className="font-semibold">Arafathossain6263@gmail.com</h3>
-              <h3 className="font-semibold">+96891207297</h3>
-              <h3 className="font-semibold">---------</h3>
+              <h3 className="font-semibold">{shopName}</h3>
+              <h3 className="font-semibold">{currentUser?.email}</h3>
+              <h3 className="font-semibold">{contact}</h3>
+              <h3 className="font-semibold">{website}</h3>
+              <h3 className="font-semibold">{address}</h3>
             </div>
           </div>
           <div className="flex flex-col gap-2">
@@ -53,7 +65,7 @@ const PrintPage = () => {
             </div>
             <div>
               <h2>Date: {moment(date).format('L')}</h2>
-              <h2 className="font-bold">Client {`xyz`}</h2>
+              <h2 className="font-bold">Client {`--------`}</h2>
             </div>
             <div className="flex w-full justify-between font-semibold text-sm border-t border-b border-dashed border-background">
               <h2 className="flex-1 text-start">Description</h2>

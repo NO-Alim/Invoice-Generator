@@ -1,18 +1,26 @@
 import moment from 'moment/moment';
 import React from 'react';
+import useAuth from '../../hooks/useAuth';
 import { precisionRound } from '../../utils/PrecisionRound';
 
 const SingleTransactionBody = ({ data }) => {
   const { products, totalPrice, timeStamp, totalItem, invoice } = data || {};
+  const { currentUser, loading, error } = useAuth();
+
+  const contact = localStorage.getItem('contact');
+  const website = localStorage.getItem('website');
+  const address = localStorage.getItem('address');
+  const shopName = localStorage.getItem('shopName');
+  const currency = localStorage.getItem('currency');
   return (
     //w-[595px] mx-auto for print
     <div className="flex flex-col gap-5">
       <h1 className="text-4xl font-semibold">INVOICE</h1>
       <div className="flex flex-col sm:flex-row items-start sm:items-end gap-10 justify-between">
         <div className="text-lg font-semibold">
-          <h1 className="">Arafat Store</h1>
-          <h1>arafatHossain@gmail.com</h1>
-          <h1>www.aitaSaita.com</h1>
+          <h1 className="">{shopName}</h1>
+          <h1>{currentUser?.email}</h1>
+          <h1>{website}</h1>
         </div>
         <div className="w-[200px]">
           <div className="flex justify-between text-xl">
@@ -46,7 +54,7 @@ const SingleTransactionBody = ({ data }) => {
             <div className="flex-1">{quantity} unit</div>
             <div className="flex-1">${precisionRound(Number(price), 2)}</div>
             <div className="flex-1">
-              $ {precisionRound(Number(price * quantity), 2)}
+              {currency} {precisionRound(Number(price * quantity), 2)}
             </div>
           </div>
         );
@@ -61,9 +69,13 @@ const SingleTransactionBody = ({ data }) => {
           <h1 className="">Due</h1>
         </div>
         <div className="col-span-1">
-          <h1>$ {precisionRound(Number(totalPrice), 2)}</h1>
-          <h1>$ {precisionRound(Number(totalPrice), 2)}</h1>
-          <h1>$ 00.00</h1>
+          <h1>
+            {currency} {precisionRound(Number(totalPrice), 2)}
+          </h1>
+          <h1>
+            {currency} {precisionRound(Number(totalPrice), 2)}
+          </h1>
+          <h1>{currency} 00.00</h1>
         </div>
       </div>
     </div>

@@ -10,6 +10,8 @@ const SingleProduct = ({ item }) => {
   //let id = _uniqueId('item-');
   const { productName, productPrice, id, subCategory, category } = item;
 
+  const currency = localStorage.getItem('currency');
+
   //click for add this product to cart slice
   const handleClick = () => {
     //cartSlice data structure
@@ -39,7 +41,7 @@ const SingleProduct = ({ item }) => {
     >
       <h1 className=" text-xl font-thin">{productName}</h1>
       <h1 className="text-textPrimary/50 ml-2 text-2xl">
-        $ {precisionRound(Number(productPrice), 2)}
+        {currency} {precisionRound(Number(productPrice), 2)}
       </h1>
     </div>
   );
